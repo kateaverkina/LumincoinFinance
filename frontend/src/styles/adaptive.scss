@@ -1,0 +1,103 @@
+@media screen and (max-width: 1165px) {
+  .main-actions {
+    justify-content: center;
+  }
+
+  .adaptive-table {
+    display: flex;
+  }
+
+
+  .trash, .pencil {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 950px) {
+
+  .nav-sidebar {
+    margin-top: 30px;
+  }
+
+  .content {
+    margin-top: 50px;
+    margin-left: 30px;
+    text-align: center;
+
+    .main-actions {
+      margin-bottom: 90px;
+    }
+
+    .operations-action-buttons {
+      justify-content: center;
+    }
+
+    .interval {
+      margin-top: 10px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 767px) {
+
+  body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper {
+    margin-left: 0;
+  }
+  body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    margin-left: 0;
+  }
+
+  .navbar-toggler:hover {
+    border-color: #007bff;
+  }
+
+  .open-card {
+    width: 100%;
+  }
+
+  .nav-link p {
+    color: #052C65;
+  }
+
+  .nav-link svg {
+    margin-left: 10px;
+  }
+
+  .nav-link.active p {
+    color: white;
+  }
+
+  .balance p {
+    margin-bottom: 0;
+  }
+
+  .content {
+    margin-top: 30px;
+    margin-left: 15px;
+  }
+
+  .main-header {
+    display: block;
+  }
+
+  .login-box {
+    padding-left: 30px;
+  }
+
+  .chart:first-child {
+    border-right: none;
+  }
+
+}
+
+@media screen and (max-width: 520px) {
+  .content {
+    margin-left: 0;
+    .main-actions {
+      margin-left: 20px;
+    }
+  }
+}
+
+
