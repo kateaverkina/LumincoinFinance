@@ -1,9 +1,8 @@
-import {CommonUtils} from "../utils/common-utils";
+import {CommonUtils} from "../utils/common-utils.js";
 
 export class MainPage {
     constructor() {
         CommonUtils.switchButton();
-
         this.chooseDate();
     }
 

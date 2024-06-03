@@ -1,9 +1,9 @@
+import {CommonUtils} from "../../../utils/common-utils";
 
 export class IncomeView {
     constructor() {
         this.deleteIncome();
         this.changeIncomeTitle();
-
     }
 
     deleteIncome() {

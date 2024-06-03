@@ -15,6 +15,8 @@ import {ExpenseCreate} from "./components/categories/expense/expense-create.js";
 import {ExpenseUpdate} from "./components/categories/expense/expense-update.js";
 import {ExpenseDelete} from "./components/categories/expense/expense-delete.js";
 import {FileUtils} from "./utils/file-utils.js";
+import {AuthUtils} from "./utils/auth-utils.js";
+import {CommonUtils} from "./utils/common-utils";
 
 
 export class Router {
@@ -59,7 +61,7 @@ export class Router {
                 load: () => {
                     document.body.classList.add('login-page');
                     document.body.style.height = '100vh';
-                    new Login();
+                    new Login(this.openNewRoute.bind(this));
                 },
                 unload: () => {
                     document.body.classList.remove('login-page');
@@ -74,7 +76,7 @@ export class Router {
                 load: () => {
                     document.body.classList.add('register-page');
                     document.body.style.height = '100vh';
-                    new Signup();
+                    new Signup(this.openNewRoute.bind(this));
                 },
                 unload: () => {
                     document.body.classList.remove('register-page');
@@ -84,7 +86,7 @@ export class Router {
             {
                 route: '/logout',
                 load: () => {
-                    new Logout();
+                    new Logout(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -161,7 +163,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/income/income-view.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeView();
+                    new IncomeView(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -305,6 +307,23 @@ export class Router {
                     document.body.classList.add('sidebar-open');
                     document.body.classList.add('layout-fixed');
 
+                    this.profileElement = document.getElementById('profile-name');
+                    if (!this.userName) {
+                        let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
+                        if(!userInfo) {
+                            return this.openNewRoute('/login');
+                        }
+                        if (userInfo) {
+                            userInfo = JSON.parse(userInfo);
+                        }
+                        if (userInfo.name && userInfo.lastName) {
+                            this.userName = userInfo.name;
+                            this.userLastName = userInfo.lastName;
+                        }
+                    }
+                    this.profileElement.innerText = this.userName + ' ' + this.userLastName;
+                    CommonUtils.getBalance().then();
+                    CommonUtils.updateBalance().then();
                     this.activateMenuItem(newRoute);
                 } else {
                     document.body.classList.remove('sidebar-mini');
@@ -368,6 +387,10 @@ export class Router {
                 document.body.classList.remove('sidebar-open');
             }
         });
+
+        document.getElementById('user-icon').addEventListener('click', () => {
+            document.getElementById('logout').style.display = 'block';
+        })
     }
 
     showCategories(categories, arrow, card) {
