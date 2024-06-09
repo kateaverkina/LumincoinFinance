@@ -40,7 +40,7 @@ export class CommonUtils {
         this.newBalance =  document.getElementById('new-balance');
         const result = await HttpUtils.request('/balance');
 
-        if (result.error || !result.response || (result.response && result.response.error) || !result.response.balance) {
+        if (result.error || !result.response || (result.response && result.response.error) || (!result.response.balance && result.response.balance !== 0)) {
             return alert('Возникла ошибка при получении баланса');
         }
 

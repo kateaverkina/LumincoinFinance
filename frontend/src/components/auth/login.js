@@ -39,7 +39,7 @@ export class Login {
 
             if (result.error || !result.response || (result.response && !result.response.tokens.accessToken || !result.response.tokens.refreshToken ||
                 !result.response.user.id || !result.response.user.name || !result.response.user.lastName)) {
-                return false;
+                return this.commonErrorElement.style.display = 'block';
             }
 
             if (result.response) {
@@ -51,8 +51,6 @@ export class Login {
                     });
                 return this.openNewRoute('/');
             }
-
-            this.commonErrorElement.style.display = 'block';
         }
     }
 }

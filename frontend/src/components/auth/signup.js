@@ -14,7 +14,6 @@ export class Signup {
 
         this.validations = [
             {element: this.nameElement},
-            {element: this.lastNameElement},
             {element: this.emailElement, options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}},
             {element: this.passwordElement, options: {pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/}},
             {element: this.passwordRepeatElement, options: {compareTo: this.passwordElement.value}},
@@ -25,7 +24,6 @@ export class Signup {
 
     findElements() {
         this.nameElement = document.getElementById('name');
-        this.lastNameElement = document.getElementById('last-name');
         this.emailElement = document.getElementById('email');
         this.passwordElement = document.getElementById('password');
         this.passwordRepeatElement = document.getElementById('repeat-password');
@@ -43,9 +41,11 @@ export class Signup {
         }
 
         if (ValidationUtils.validateForm(this.validations)) {
+            let fullName = this.nameElement.value.split(' ');
+
             const result = await HttpUtils.request('/signup', 'POST', false, {
-                name: this.nameElement.value,
-                lastName: this.lastNameElement.value,
+                name: fullName[0],
+                lastName: fullName[1],
                 email: this.emailElement.value,
                 password: this.passwordElement.value,
                 passwordRepeat: this.passwordRepeatElement.value
@@ -53,18 +53,23 @@ export class Signup {
 
             if (result.error || !result.response || (result.response && !result.response.user.id || !result.response.user.name
                 || !result.response.user.lastName || !result.response.user.email )) {
-                return false;
+                return this.commonErrorElement.style.display = 'block';
             }
 
             if (result.response) {
-                AuthUtils.setAuthInfo('', '',
+                const result = await HttpUtils.request('/login', 'POST', false, {
+                    email: this.emailElement.value,
+                    password: this.passwordElement.value,
+                    rememberMe: false,
+                });
+
+                AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken,
                     {
                         id: result.response.user.id,
                         name: result.response.user.name,
-                        lastName: result.response.user.lastName,
-                        email: result.response.user.email
+                        lastName: result.response.user.lastName
                     });
-                return this.openNewRoute('/login');
+                return this.openNewRoute('/');
             }
         }
     }
