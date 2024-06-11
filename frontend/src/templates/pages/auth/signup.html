@@ -5,7 +5,7 @@
     <!-- /.login-logo -->
     <div>
         <h1 class="login-box-msg">Создайте аккаунт</h1>
-        <div id="common-error" class="error invalid-feedback text-center mb-3">Неправильный E-mail или пароль</div>
+        <div id="common-error" class="error invalid-feedback text-center mb-3">Не удалось зарегистрировать пользователя</div>
         <form>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -16,9 +16,9 @@
                         </svg>
                     </div>
                 </div>
-                <label for="full-name"></label>
-                <input type="text" class="form-control" placeholder="ФИО" id="full-name">
-                <span id="full-name-error" class="error invalid-feedback">Введите полное имя</span>
+                <label for="name"></label>
+                <input type="text" class="form-control" placeholder="ФИО" id="name">
+                <span id="name-error" class="error invalid-feedback">Введите ФИО</span>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <label for="password"></label>
-                <input type="text" class="form-control" placeholder="Пароль" id="password">
+                <input type="password" class="form-control" placeholder="Пароль" id="password">
                 <span id="password-error" class="error invalid-feedback">Пароль должен быть не менее 8 символов, содержать как минимум 1 букву в верхнем регистре и как минимум 1 цифру
 </span>
             </div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <label for="repeat-password"></label>
-                <input type="text" class="form-control" placeholder="Подтверждение пароля" id="repeat-password">
+                <input type="password" class="form-control" placeholder="Подтверждение пароля" id="repeat-password">
                 <span id="repeat-password-error" class="error invalid-feedback">Повторите пароль</span>
             </div>
 

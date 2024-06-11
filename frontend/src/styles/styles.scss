@@ -187,6 +187,18 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
   color: #052C65;
 }
 
+#logout {
+  display: none;
+}
+
+#user-icon {
+  cursor: pointer;
+}
+
+#balance {
+  cursor: pointer;
+}
+
 @import "adaptive";
 
 

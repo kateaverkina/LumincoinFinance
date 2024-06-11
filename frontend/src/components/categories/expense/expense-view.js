@@ -1,3 +1,4 @@
+
 export class ExpenseView {
     constructor() {
         this.popup = document.getElementById('expense-popup');

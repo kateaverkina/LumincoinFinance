@@ -1,5 +1,7 @@
+
 export class ExpenseCreate {
     constructor() {
+
         this.createInputElement = document.getElementById('create-input');
         document.getElementById('create-button').addEventListener('click', this.create.bind(this));
     }
