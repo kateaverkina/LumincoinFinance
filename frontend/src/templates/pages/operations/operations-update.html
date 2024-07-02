@@ -5,23 +5,25 @@
                 <h1>Редактирование дохода/расхода</h1>
             </div>
             <div class="mt-5">
-                <select id="type" class="select2 w-50 form-select" data-placeholder="Тип...">
-                    <option id="type-select" value="" disabled selected></option>
-                    <option>Доход</option>
-                    <option>Расход</option>
+                <label for="type"></label>
+                <select id="type" class="select2 w-50 form-control" data-placeholder="Тип...">
+                    <option value="" selected></option>
+                    <option value="Доход">Доход</option>
+                    <option value="Расход">Расход</option>
                 </select>
                 <span id="type-error" class="error invalid-feedback">Выберите тип</span>
             </div>
-            <div class="mt-4">
-                <select id="category" class="select2 w-50 custom-select" data-placeholder="Категория...">
+            <div>
+                <label for="category"></label>
+                <select id="category" class="select2 w-50 form-control" data-placeholder="Категория...">
                     <option value="" disabled selected></option>
                 </select>
                 <span id="category-error" class="error invalid-feedback">Выберите категорию</span>
             </div>
             <div>
-                <label for="sum"></label>
-                <input type="number" id="sum" class="form-control w-50" placeholder="Сумма в $...">
-                <span id="sum-error" class="error invalid-feedback">Введите сумму</span>
+                <label for="amount"></label>
+                <input type="number" id="amount" class="form-control w-50" placeholder="Сумма в $...">
+                <span id="amount-error" class="error invalid-feedback">Введите сумму</span>
             </div>
             <div>
                 <label for="date"></label>

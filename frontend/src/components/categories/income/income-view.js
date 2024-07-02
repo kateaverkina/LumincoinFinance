@@ -1,31 +1,19 @@
-import {CommonUtils} from "../../../utils/common-utils";
+import {CategoriesService} from "../../../service/categories-service.js";
 
 export class IncomeView {
-    constructor() {
-        this.deleteIncome();
-        this.changeIncomeTitle();
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
+        this.param = 'income';
+        this.getExpenseCategories().then();
     }
 
-    deleteIncome() {
-        this.popup = document.getElementById('income-popup');
+    async getExpenseCategories() {
+        const response = await CategoriesService.getCategories(this.param);
 
-        document.querySelectorAll('.delete').forEach(item => {
-            item.addEventListener('click', () => {
-                this.popup.classList.add('open');
-            })
-        })
-        document.getElementById('income-do-not-delete').addEventListener('click', () => {
-            this.popup.classList.remove('open');
-        })
-    }
-
-    changeIncomeTitle() {
-        document.querySelectorAll('.update').forEach(item => {
-            item.onclick = function (e) {
-                let categoryTitle = e.target.parentElement.previousElementSibling.innerText;
-                localStorage.setItem('inputValue', categoryTitle);
-                item.href = 'income/update';
-            }
-        })
+        if (response.error) {
+            alert(response.error);
+            return response.redirect ? this.openNewRoute(response.redirect) : null;
+        }
+        CategoriesService.showCategoriesList(response.categories, this.param);
     }
 }

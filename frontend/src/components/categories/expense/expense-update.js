@@ -1,26 +1,69 @@
+import {CategoriesService} from "../../../service/categories-service.js";
+import {UrlUtils} from "../../../utils/url-utils.js";
+import {ValidationUtils} from "../../../utils/validation-utils.js";
+
 
 export class ExpenseUpdate {
-    constructor() {
-        this.setInputValue();
-        this.updateInputElement = document.getElementById('update-input');
-        document.getElementById('update-button').addEventListener('click', this.update.bind(this));
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
+
+        const id = UrlUtils.getUrlParam('id');
+        if (!id) {
+            return this.openNewRoute('/');
+        }
+
+        this.param = 'expense';
+        this.categoryElement = document.getElementById('update-input');
+
+        this.validations = [
+            {element: this.categoryElement}
+        ]
+
+        document.getElementById('update-button').addEventListener('click', this.updateCategory.bind(this));
+
+        this.init(id).then();
     }
 
-    setInputValue() {
-        let inputValue = localStorage.getItem('inputValue');
-        let inputElement = document.getElementById('update-input');
-        inputElement.value = inputValue;
-    }
-
-    validateForm() {
-        if (this.updateInputElement.value) {
-            this.updateInputElement.classList.remove('is-invalid');
-        } else {
-            this.updateInputElement.classList.add('is-invalid');
+    async init(id) {
+        const categoryData = await this.getCategory(id);
+        if (categoryData) {
+            this.showCategory(categoryData);
         }
     }
 
-    update() {
-        this.validateForm();
+
+    async getCategory(id) {
+        const response = await CategoriesService.getCategory(this.param, id);
+        if (response.error) {
+            alert(response.error);
+            return response.redirect ? this.openNewRoute(response.redirect) : null;
+        }
+        this.categoryOriginalData = response.category;
+        return response.category;
+    }
+
+    showCategory(category) {
+        document.getElementById('update-input').value = category.title;
+    }
+
+    async updateCategory(e) {
+        e.preventDefault();
+        if (ValidationUtils.validateForm(this.validations)) {
+            const categoryChangedData = {
+                title: this.categoryElement.value,
+            };
+
+            if(categoryChangedData.title !== this.categoryOriginalData.title) {
+                const response = await CategoriesService.updateCategory(this.param, this.categoryOriginalData.id, categoryChangedData);
+
+                if (response.error) {
+                    alert(response.error);
+                    return response.redirect ? this.openNewRoute(response.redirect) : null;
+                }
+
+                return this.openNewRoute('/' + this.param);
+            }
+            return this.openNewRoute('/' + this.param);
+        }
     }
 }

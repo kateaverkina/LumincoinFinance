@@ -1,20 +1,34 @@
+import {CategoriesService} from "../../../service/categories-service.js";
+import {ValidationUtils} from "../../../utils/validation-utils.js";
 
 export class ExpenseCreate {
-    constructor() {
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
 
-        this.createInputElement = document.getElementById('create-input');
-        document.getElementById('create-button').addEventListener('click', this.create.bind(this));
+        this.param = 'expense';
+        this.categoryElement = document.getElementById('create-input');
+
+        this.validations = [
+            {element: this.categoryElement},
+        ];
+
+        document.getElementById('create-button').addEventListener('click', this.createCategory.bind(this));
     }
 
-    validateForm() {
-        if (this.createInputElement.value) {
-            this.createInputElement.classList.remove('is-invalid');
-        } else {
-            this.createInputElement.classList.add('is-invalid');
+    async createCategory() {
+        if(ValidationUtils.validateForm(this.validations)) {
+            const createData = {
+                title: this.categoryElement.value,
+            };
+
+            const response = await CategoriesService.createCategory(this.param, createData);
+
+            if(response.error) {
+                alert(response.error);
+                return response.redirect ? this.openNewRoute(response.redirect) : null;
+            }
+
+            return this.openNewRoute('/' + this.param);
         }
-    }
-
-    create() {
-        this.validateForm();
     }
 }
