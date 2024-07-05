@@ -3,7 +3,6 @@ import {OperationsService} from "../service/operations-service.js";
 export class MainPage {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
-        this.operations = [];
         this.findElements();
         this.chooseDate();
         this.init().then();
@@ -38,7 +37,8 @@ export class MainPage {
             return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
 
-        this.showCharts(response.operations);
+        this.showIncomeChart(response.operations);
+        this.showExpenseChart(response.operations);
         this.intervalDates();
     }
 
@@ -81,37 +81,41 @@ export class MainPage {
                     return response.redirect ? this.openNewRoute(response.redirect) : null;
                 }
 
-                this.showCharts(response.operations);
+                this.showIncomeChart(response.operations);
+                this.showExpenseChart(response.operations);
             }
         })
     }
 
-    showCharts(operations) {
+    addData(chart, label, newData) {
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(newData);
+        });
+        chart.update();
+    }
+
+
+    showIncomeChart(operations) {
         let incomeTypeOperations = operations.filter(operation => {
             return operation.type === 'income';
         })
         if (incomeTypeOperations) {
-            let incomeTitles = [];
-            let incomeAmounts = [];
+            let incomeChartCanvas = document.getElementById('incomeChart');
+            let canvasParent = document.getElementById('canvasIncomeParent');
 
-            let result = {};
-            for (let element of incomeTypeOperations) {
-                if (result[element.category] === undefined)
-                    result[element.category] = 0;
-                result[element.category] += element.amount;
-            }
-            for (let category in result) {
-                incomeTitles.push(category);
-                incomeAmounts.push(result[category]);
-            }
+            incomeChartCanvas.remove();
+            let newCanvas = document.createElement('canvas');
+            newCanvas.setAttribute('id', 'incomeChart');
+            canvasParent.appendChild(newCanvas);
 
             let pieChartCanvas = $('#incomeChart').get(0).getContext('2d');
 
             let pieData = {
-                labels: incomeTitles,
+                labels: [],
                 datasets: [
                     {
-                        data: incomeAmounts,
+                        data: [],
                         backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                     }
                 ]
@@ -122,20 +126,65 @@ export class MainPage {
                 responsive: true,
             }
 
-            new Chart(pieChartCanvas, {
+            let incomeChart = new Chart(pieChartCanvas, {
                 type: 'pie',
                 data: pieData,
                 options: pieOptions
             })
-        }
 
+            let result = {};
+            for (let element of incomeTypeOperations) {
+                if (result[element.category] === undefined)
+                    result[element.category] = 0;
+                result[element.category] += element.amount;
+            }
+
+            for (let category in result) {
+                this.addData(incomeChart, category, result[category]);
+            }
+        }
+    }
+
+    showExpenseChart(operations) {
+        let expenseChart;
+        if(expenseChart) {
+            expenseChart.destroy();
+        }
         let expenseTypeOperations = operations.filter(operation => {
             return operation.type === 'expense';
         })
 
         if (expenseTypeOperations) {
-            let expenseTitles = [];
-            let expenseAmounts = [];
+            let expenseChartCanvas = document.getElementById('expenseChart');
+            let canvasParent = document.getElementById('canvasExpenseParent');
+
+            expenseChartCanvas.remove();
+            let newCanvas = document.createElement('canvas');
+            newCanvas.setAttribute('id', 'expenseChart');
+            canvasParent.appendChild(newCanvas);
+
+            let pieChartCanvas = $('#expenseChart').get(0).getContext('2d');
+
+            let pieData = {
+                labels: [],
+                datasets: [
+                    {
+                        data: [],
+                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                    }
+                ]
+            }
+
+            let pieOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            }
+
+            expenseChart = new Chart(pieChartCanvas, {
+                type: 'pie',
+                data: pieData,
+                options: pieOptions
+            })
 
             let result = {};
             for (let element of expenseTypeOperations) {
@@ -144,32 +193,8 @@ export class MainPage {
                 result[element.category] += element.amount;
             }
             for (let category in result) {
-                expenseTitles.push(category);
-                expenseAmounts.push(result[category]);
+                this.addData(expenseChart, category, result[category]);
             }
-
-            let pieChartCanvas = $('#expenseChart').get(0).getContext('2d');
-
-            let pieData = {
-                labels: expenseTitles,
-                datasets: [
-                    {
-                        data: expenseAmounts,
-                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-                    }
-                ]
-            }
-
-            let pieOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-
-            new Chart(pieChartCanvas, {
-                type: 'pie',
-                data: pieData,
-                options: pieOptions
-            })
         }
     }
 
@@ -207,7 +232,8 @@ export class MainPage {
                         return response.redirect ? this.openNewRoute(response.redirect) : null;
                     }
 
-                    this.showCharts(response.operations);
+                    this.showIncomeChart(response.operations);
+                    this.showExpenseChart(response.operations);
                 }
             })
         }

@@ -36,16 +36,14 @@
             <div class="row charts d-flex flex-wrap">
                 <div class="income chart text-center">
                     <h2 class="small-title ">Доходы</h2>
-                    <div class="card-body">
-                        <canvas id="incomeChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    <div class="card-body"  id="canvasIncomeParent">
+                        <canvas id="incomeChart"></canvas>
                     </div>
                 </div>
                 <div class="expense chart text-center">
                     <h2 class="small-title ">Расходы</h2>
-                    <div class="card-body">
-                        <canvas id="expenseChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    <div class="card-body" id="canvasExpenseParent">
+                        <canvas id="expenseChart"></canvas>
                     </div>
                 </div>
             </div>

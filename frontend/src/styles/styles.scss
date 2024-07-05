@@ -197,6 +197,13 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
   cursor: pointer;
 }
 
+canvas {
+  min-height: 250px;
+  height: 250px;
+  max-height: 250px;
+  max-width: 100%
+}
+
 @import "adaptive";
 
 
