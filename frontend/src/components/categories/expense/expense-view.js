@@ -1,31 +1,21 @@
+import {CategoriesService} from "../../../service/categories-service.js";
 
 export class ExpenseView {
-    constructor() {
-        this.popup = document.getElementById('expense-popup');
-        this.deleteExpense();
-        this.changeExpenseTitle();
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
+        this.param = 'expense';
 
+        this.getExpenseCategories().then();
     }
 
-    deleteExpense() {
-        document.querySelectorAll('.delete').forEach(item => {
-            item.addEventListener('click', () => {
-                this.popup.classList.add('open');
-            })
-        })
+    async getExpenseCategories() {
+        const response = await CategoriesService.getCategories(this.param);
 
-        document.getElementById('expense-do-not-delete').addEventListener('click', () => {
-            this.popup.classList.remove('open');
-        })
+        if (response.error) {
+            alert(response.error);
+            return response.redirect ? this.openNewRoute(response.redirect) : null;
+        }
+        CategoriesService.showCategoriesList(response.categories, this.param);
     }
 
-    changeExpenseTitle() {
-        document.querySelectorAll('.update').forEach(item => {
-            item.onclick = function (e) {
-                let categoryTitle = e.target.parentElement.previousElementSibling.innerText;
-                localStorage.setItem('inputValue', categoryTitle);
-                item.href = 'expense/update';
-            }
-        })
-    }
 }

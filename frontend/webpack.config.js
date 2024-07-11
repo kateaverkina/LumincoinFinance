@@ -47,8 +47,10 @@ module.exports = {
                 {from: "./node_modules/admin-lte/dist/js/adminlte.min.js", to: "js"},
                 {from: "./node_modules/admin-lte/plugins/jquery/jquery.min.js", to: "js"},
                 {from: "./node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js", to: "js"},
-                // {from: "./node_modules/admin-lte/plugins/chart.js/Chart.min.js", to: "js"},
-                // {from: "./node_modules/admin-lte/plugins/chart.js/Chart.min.css", to: "css"},
+                {from: "./src/lib/bootstrap-datetimepicker.min.js", to: "js"},
+                {from: "./src/lib/bootstrap-datetimepicker.min.css", to: "css"},
+                {from: "./node_modules/admin-lte/plugins/chart.js/Chart.min.js", to: "js"},
+                {from: "./node_modules/admin-lte/plugins/chart.js/Chart.min.css", to: "css"},
                 {from: "./node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js", to: "js"},
                 {from: "./node_modules/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js", to: "js"},
                 {from: "./node_modules/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js", to: "js"},
@@ -59,8 +61,6 @@ module.exports = {
                 {from: "./node_modules/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css", to: "css"},
                 {from: "./node_modules/admin-lte/plugins/moment/moment.min.js", to: "js"},
                 {from: "./node_modules/admin-lte/plugins/moment/locale/ru.js", to: "js/moment-ru-locale.js"},
-                {from: "./node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js", to: "js"},
-                {from: "./node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css", to: "css"},
             ],
         })
     ]

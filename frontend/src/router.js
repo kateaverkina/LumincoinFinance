@@ -16,7 +16,7 @@ import {ExpenseUpdate} from "./components/categories/expense/expense-update.js";
 import {ExpenseDelete} from "./components/categories/expense/expense-delete.js";
 import {FileUtils} from "./utils/file-utils.js";
 import {AuthUtils} from "./utils/auth-utils.js";
-import {CommonUtils} from "./utils/common-utils";
+import {BalanceUtils} from "./utils/balance-utils.js";
 
 
 export class Router {
@@ -34,18 +34,18 @@ export class Router {
                 filePathTemplate: '/templates/pages/main-page.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new MainPage();
+                    new MainPage(this.openNewRoute.bind(this));
                 },
                 styles: [
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
+                    'Chart.min.css'
                 ],
                 scripts: [
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
+                    'Chart.min.js'
                 ],
-                //     scripts: ['Chart.min.js'],
-                //     styles: ['Chart.min.css']
             },
             {
                 route: '/404',
@@ -95,12 +95,12 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/operations-view.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsView();
+                    new OperationsView(this.openNewRoute.bind(this));
                 },
                 styles: [
                     'dataTables.bootstrap4.min.css',
                     'responsive.bootstrap4.min.css',
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
                 ],
                 scripts: [
                     'jquery.dataTables.min.js',
@@ -108,7 +108,7 @@ export class Router {
                     'responsive.bootstrap4.min.js',
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
                 ],
             },
             {
@@ -117,18 +117,18 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/operations-create.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsCreate();
+                    new OperationsCreate(this.openNewRoute.bind(this));
                 },
                 styles: [
                     'select2.min.css',
                     'select2-bootstrap4.min.css',
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
                 ],
                 scripts: [
                     'select2.full.min.js',
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
                 ],
             },
             {
@@ -137,24 +137,24 @@ export class Router {
                 filePathTemplate: '/templates/pages/operations/operations-update.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsUpdate();
+                    new OperationsUpdate(this.openNewRoute.bind(this));
                 },
                 styles: [
                     'select2.min.css',
                     'select2-bootstrap4.min.css',
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
                 ],
                 scripts: [
                     'select2.full.min.js',
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
                 ],
             },
             {
                 route: '/operations/delete',
                 load: () => {
-                    new OperationsDelete();
+                    new OperationsDelete(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -172,7 +172,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/income/income-create.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeCreate();
+                    new IncomeCreate(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -181,13 +181,13 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/income/income-update.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeUpdate();
+                    new IncomeUpdate(this.openNewRoute.bind(this));
                 },
             },
             {
                 route: '/income/delete',
                 load: () => {
-                    new IncomeDelete();
+                    new IncomeDelete(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -196,7 +196,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/expense/expense-view.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ExpenseView();
+                    new ExpenseView(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -205,7 +205,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/expense/expense-create.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ExpenseCreate();
+                    new ExpenseCreate(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -214,13 +214,13 @@ export class Router {
                 filePathTemplate: '/templates/pages/categories/expense/expense-update.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ExpenseUpdate();
+                    new ExpenseUpdate(this.openNewRoute.bind(this));
                 },
             },
             {
                 route: '/expense/delete',
                 load: () => {
-                    new ExpenseDelete();
+                    new ExpenseDelete(this.openNewRoute.bind(this));
                 },
             },
         ]
@@ -322,8 +322,15 @@ export class Router {
                         }
                     }
                     this.profileElement.innerText = this.userName + ' ' + this.userLastName;
-                    CommonUtils.getBalance().then();
-                    CommonUtils.updateBalance().then();
+
+                    const response = await  BalanceUtils.getBalance().then();
+
+                    if(response.error) {
+                        alert(response.error);
+                        return response.redirect = this.openNewRoute('/login');
+                    }
+
+                    BalanceUtils.updateBalance().then();
                     this.activateMenuItem(newRoute);
                 } else {
                     document.body.classList.remove('sidebar-mini');

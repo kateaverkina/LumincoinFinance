@@ -1,15 +1,13 @@
+@media screen and (max-width: 1439px) {
+  .chart:first-child {
+    border-right: none;
+  }
+}
+
+
 @media screen and (max-width: 1165px) {
   .main-actions {
     justify-content: center;
-  }
-
-  .adaptive-table {
-    display: flex;
-  }
-
-
-  .trash, .pencil {
-    display: none;
   }
 }
 
@@ -83,10 +81,6 @@
 
   .login-box {
     padding-left: 30px;
-  }
-
-  .chart:first-child {
-    border-right: none;
   }
 
 }

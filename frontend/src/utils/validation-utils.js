@@ -3,7 +3,7 @@ export class ValidationUtils {
         let isValid = true;
 
         for (let i = 0; i < validations.length; i++) {
-            if(!ValidationUtils.validateField(validations[i].element, validations[i].options)) {
+            if(!ValidationUtils.validateField(validations[i].element, validations[i].options, validations[i].select, validations[i].date)) {
                 isValid = false;
             }
         }
@@ -20,7 +20,7 @@ export class ValidationUtils {
                 condition = element.value && element.value === options.compareTo;
             } else if (options.hasOwnProperty('checkProperty')) {
                 condition = options.checkProperty;
-            }else if (options.hasOwnProperty('checked')) {
+            } else if (options.hasOwnProperty('checked')) {
                 condition = element.checked;
             }
         }

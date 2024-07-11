@@ -5,6 +5,7 @@
                 <h1>Создание дохода/расхода</h1>
             </div>
             <div class="mt-5">
+                <label for="type"></label>
                 <select id="type" class="select2 w-50 form-select" data-placeholder="Тип...">
                     <option id="type-select" value="" disabled selected></option>
                     <option>Доход</option>
@@ -12,31 +13,30 @@
                 </select>
                 <span id="type-error" class="error invalid-feedback">Выберите тип</span>
             </div>
-            <div class="mt-4">
-                <select id="category" class="select2 w-50 custom-select" data-placeholder="Категория...">
-                    <option value="" disabled selected></option>
+            <div>
+                <label for="choose-category"></label>
+                <select id="choose-category" class="select2 w-50 form-select" data-placeholder="Категория...">
+                    <option id="choose-category-select" value="" disabled selected></option>
                 </select>
-                <span id="category-error" class="error invalid-feedback">Выберите категорию</span>
+                <span id="choose-category-error" class="error invalid-feedback">Выберите категорию</span>
             </div>
             <div>
                 <label for="sum"></label>
                 <input type="number" id="sum" class="form-control w-50" placeholder="Сумма в $...">
                 <span id="sum-error" class="error invalid-feedback">Введите сумму</span>
             </div>
-
             <div>
                 <label for="date"></label>
-                <div data-target="#date" data-toggle="datetimepicker">
-                    <input type="text" id="date" class="form-control w-50 datetimepicker-input" placeholder="Дата..." data-target="#date">
-                </div>
+                <input type="text" class="datetimepicker-input form-control w-50" id="date" placeholder="Дата..."/>
                 <span id="date-error" class="error invalid-feedback">Введите дату</span>
             </div>
             <div>
                 <label for="comment"></label>
-                <input type="text" id="comment" class="form-control w-50 mb-4" placeholder="Комментарий...">
+                <input type="text" id="comment" class="form-control w-50 mb-1" placeholder="Комментарий...">
+                <span id="comment-error" class="error invalid-feedback">Введите комментарий</span>
             </div>
 
-            <div class="row ml-0">
+            <div class="row ml-0 mt-4">
                 <a class="btn btn-success btn-md mr-2" id="create-button">Создать</a>
                 <a href="/operations" class="btn btn-danger btn-md">Отмена</a>
             </div>

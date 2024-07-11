@@ -13,7 +13,7 @@
   }
 
   .main-actions {
-    margin-bottom: 140px;
+    margin-bottom: 40px;
   }
 
   .error {
@@ -84,6 +84,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 
 .small-title {
   color: #290661;
+  font-size: 28px;
 }
 
 #categories {
@@ -178,9 +179,6 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
   border-right: 1px solid #dee2e6;
 }
 
-.adaptive-table {
-  display: none;
-}
 
 .table thead th {
   border-bottom: none;
@@ -197,6 +195,13 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 
 #balance {
   cursor: pointer;
+}
+
+canvas {
+  min-height: 250px;
+  height: 250px;
+  max-height: 250px;
+  max-width: 100%
 }
 
 @import "adaptive";
