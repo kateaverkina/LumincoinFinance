@@ -37,13 +37,13 @@ export class Router {
                     new MainPage(this.openNewRoute.bind(this));
                 },
                 styles: [
-                    'tempusdominus-bootstrap-4.min.css',
+                    'bootstrap-datetimepicker.min.css',
                     'Chart.min.css'
                 ],
                 scripts: [
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js',
+                    'bootstrap-datetimepicker.min.js',
                     'Chart.min.js'
                 ],
             },
@@ -100,7 +100,7 @@ export class Router {
                 styles: [
                     'dataTables.bootstrap4.min.css',
                     'responsive.bootstrap4.min.css',
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
                 ],
                 scripts: [
                     'jquery.dataTables.min.js',
@@ -108,7 +108,7 @@ export class Router {
                     'responsive.bootstrap4.min.js',
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
                 ],
             },
             {
@@ -122,13 +122,13 @@ export class Router {
                 styles: [
                     'select2.min.css',
                     'select2-bootstrap4.min.css',
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
                 ],
                 scripts: [
                     'select2.full.min.js',
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
                 ],
             },
             {
@@ -142,13 +142,13 @@ export class Router {
                 styles: [
                     'select2.min.css',
                     'select2-bootstrap4.min.css',
-                    'tempusdominus-bootstrap-4.min.css'
+                    'bootstrap-datetimepicker.min.css',
                 ],
                 scripts: [
                     'select2.full.min.js',
                     'moment.min.js',
                     'moment-ru-locale.js',
-                    'tempusdominus-bootstrap-4.min.js'
+                    'bootstrap-datetimepicker.min.js',
                 ],
             },
             {

@@ -9,7 +9,7 @@ export class OperationsUpdate {
         this.openNewRoute = openNewRoute;
 
         $('#date').datetimepicker({
-            format: 'L'
+            format: 'DD.MM.YYYY'
         });
 
         const id = UrlUtils.getUrlParam('id');
@@ -25,7 +25,7 @@ export class OperationsUpdate {
             {element: this.typeElement},
             {element: this.categoryElement},
             {element: this.amountElement},
-            {element: this.dateElement, date: this.dateErrorElement},
+            {element: this.dateElement},
             {element: this.commentElement},
         ];
 
@@ -37,7 +37,6 @@ export class OperationsUpdate {
         this.categoryElement = document.getElementById('category');
         this.amountElement = document.getElementById('amount');
         this.dateElement = document.getElementById('date');
-        this.dateErrorElement = document.getElementById('date-error');
         this.commentElement = document.getElementById('comment');
     }
 

@@ -6,32 +6,34 @@
                 <h1 class="">Доходы и расходы</h1>
             </div>
             <div class="row mb-4 operations-action-buttons">
-                <a href="/operations/create?type=income" class="btn btn-success btn-sm mr-2" id="create-income">Создать доход</a>
-                <a href="/operations/create?type=expense" class="btn btn-danger btn-sm" id="create-expense">Создать расход</a>
+                <a href="/operations/create?type=income" class="btn btn-success btn-sm mr-2" id="create-income">Создать
+                    доход</a>
+                <a href="/operations/create?type=expense" class="btn btn-danger btn-sm" id="create-expense">Создать
+                    расход</a>
             </div>
             <div class="main-actions d-flex flex-wrap align-items-center" id="main-actions">
-                <button type="button" class="btn btn-block btn-outline-secondary main-action active today" id="today">Сегодня</button>
-                <button type="button" class="btn btn-block btn-outline-secondary main-action week" id="week">Неделя</button>
-                <button type="button" class="btn btn-block btn-outline-secondary main-action month" id="month">Месяц</button>
-                <button type="button" class="btn btn-block btn-outline-secondary main-action year" id="year">Год</button>
-                <button type="button" class="btn btn-block btn-outline-secondary main-action interval" id="interval">Интервал</button>
+                <button type="button" class="btn btn-block btn-outline-secondary main-action active today" id="today">
+                    Сегодня
+                </button>
+                <button type="button" class="btn btn-block btn-outline-secondary main-action week" id="week">Неделя
+                </button>
+                <button type="button" class="btn btn-block btn-outline-secondary main-action month" id="month">Месяц
+                </button>
+                <button type="button" class="btn btn-block btn-outline-secondary main-action year" id="year">Год
+                </button>
+                <button type="button" class="btn btn-block btn-outline-secondary main-action interval" id="interval">
+                    Интервал
+                </button>
                 <div class="interval">
                     <div class="d-flex align-items-center mr-4 mt-2">
-                        <label for="date-from" class="mb-0 mr-3">С</label>
-                        <div data-target="#date-from" data-toggle="datetimepicker">
-                            <input type="text" id="date-from" class="datetimepicker-input main-dates p-0"
-                                   placeholder="Дата" data-target="#date-from">
-                        </div>
+                        <label for="date-from" class="mb-0 mr-3">C</label>
+                        <input type="text" class=" datetimepicker-input main-dates p-0" id="date-from" placeholder="Дата"/>
                     </div>
 
                     <div class="d-flex align-items-center mt-2">
                         <label for="date-to" class="mb-0 mr-3">По</label>
-                        <div data-target="#date-to" data-toggle="datetimepicker">
-                            <input type="text" id="date-to" class="datetimepicker-input main-dates p-0"
-                                   placeholder="Дата" data-target="#date-to">
-                        </div>
+                        <input type="text" class=" datetimepicker-input main-dates p-0" id="date-to" placeholder="Дата"/>
                     </div>
-
                 </div>
             </div>
             <div>

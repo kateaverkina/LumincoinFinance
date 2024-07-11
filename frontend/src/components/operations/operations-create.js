@@ -14,7 +14,7 @@ export class OperationsCreate {
         }
 
         $('#date').datetimepicker({
-            format: 'L'
+            format: 'DD.MM.YYYY'
         });
         this.findElements();
         this.getType(type);
@@ -25,7 +25,7 @@ export class OperationsCreate {
             {element: this.typeElement},
             {element: this.categoryElement},
             {element: this.sumElement},
-            {element: this.dateElement, date: this.dateErrorElement},
+            {element: this.dateElement},
             {element:this.commentElement},
         ];
 
@@ -37,7 +37,6 @@ export class OperationsCreate {
         this.categoryElement = document.getElementById('choose-category');
         this.sumElement = document.getElementById('sum');
         this.dateElement = document.getElementById('date');
-        this.dateErrorElement = document.getElementById('date-error');
         this.commentElement = document.getElementById('comment');
     }
 

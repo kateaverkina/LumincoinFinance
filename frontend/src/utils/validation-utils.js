@@ -11,7 +11,7 @@ export class ValidationUtils {
         return isValid;
     }
 
-    static validateField(element, options, select, date) {
+    static validateField(element, options) {
         let condition = element.value;
         if (options) {
             if(options.hasOwnProperty('pattern')) {
@@ -22,14 +22,6 @@ export class ValidationUtils {
                 condition = options.checkProperty;
             } else if (options.hasOwnProperty('checked')) {
                 condition = element.checked;
-            }
-        }
-
-        if (date) {
-            if (element.value) {
-                date.style.display = 'none';
-            } else {
-                date.style.display = 'block';
             }
         }
 

@@ -17,26 +17,20 @@
                 </button>
                 <div class="interval">
                     <div class="d-flex align-items-center mr-4 mt-2">
-                        <label for="date-from" class="mb-0 mr-3">С</label>
-                        <div data-target="#date-from" data-toggle="datetimepicker">
-                            <input type="text" id="date-from" class="datetimepicker-input main-dates p-0"
-                                   placeholder="Дата" data-target="#date-from">
-                        </div>
+                        <label for="date-from" class="mb-0 mr-3">C</label>
+                        <input type="text" class="datetimepicker-input main-dates p-0" id="date-from" placeholder="Дата"/>
                     </div>
 
                     <div class="d-flex align-items-center mt-2">
                         <label for="date-to" class="mb-0 mr-3">По</label>
-                        <div data-target="#date-to" data-toggle="datetimepicker">
-                            <input type="text" id="date-to" class="datetimepicker-input main-dates p-0"
-                                   placeholder="Дата" data-target="#date-to">
-                        </div>
+                        <input type="text" class="datetimepicker-input main-dates p-0" id="date-to" placeholder="Дата"/>
                     </div>
                 </div>
             </div>
             <div class="row charts d-flex flex-wrap">
                 <div class="income chart text-center">
                     <h2 class="small-title ">Доходы</h2>
-                    <div class="card-body"  id="canvasIncomeParent">
+                    <div class="card-body" id="canvasIncomeParent">
                         <canvas id="incomeChart"></canvas>
                     </div>
                 </div>

@@ -6,19 +6,8 @@ export class OperationsView {
         this.openNewRoute = openNewRoute;
 
         this.findElements();
-        this.chooseDate();
         this.init().then();
         this.getOperationsWithFilter().then();
-    }
-
-    chooseDate() {
-        $(this.dateFrom).datetimepicker({
-            format: 'L'
-        });
-
-        $(this.dateTo).datetimepicker({
-            format: 'L'
-        });
     }
 
     findElements() {
@@ -28,13 +17,14 @@ export class OperationsView {
         this.dateTo = document.getElementById('date-to');
         this.parentElement = document.getElementById('main-actions');
         this.mainAction = document.querySelectorAll('.main-action');
-        this.intervalElement = document.getElementById('interval');
     }
 
     async init() {
-        let dateTo = '';
-        let dateFrom = '';
+        this.dateFrom.setAttribute('disabled', 'disabled');
+        this.dateTo.setAttribute('disabled', 'disabled');
 
+        let dateFrom = moment().format('YYYY-MM-DD');
+        let dateTo = moment().format('YYYY-MM-DD');
         const response = await OperationsService.getOperations(dateFrom, dateTo);
         if (response.error) {
             alert(response.error);
@@ -44,7 +34,6 @@ export class OperationsView {
 
         this.showOperations(response.operations);
         this.operationsDelete(response.operations);
-        this.intervalDates();
     }
 
     async getOperationsWithFilter() {
@@ -56,28 +45,34 @@ export class OperationsView {
                     this.mainAction[i].classList.remove('active');
                 }
                 target.classList.add('active');
+                this.dateFrom.setAttribute('disabled', 'disabled');
+                this.dateTo.setAttribute('disabled', 'disabled');
 
-                let date = new Date();
-                let day = (`0${date.getDate()}`).slice(-2);
-                let month = (`0${date.getMonth() + 1}`).slice(-2);
-                let year = date.getFullYear();
-                let dateTo = year + "-" + month + "-" + day;
-                let dateFrom = year + "-" + month + "-" + day;
+                let dateFrom;
+                let dateTo;
 
                 if (target.classList.contains('today')) {
-                    dateFrom = year + "-" + month + "-" + day;
+                    dateFrom = moment().format('YYYY-MM-DD');
+                    dateTo = moment().format('YYYY-MM-DD');
                 }
                 if (target.classList.contains('week')) {
-                    date.setDate(date.getDate() - 7);
-                    dateFrom = date.toISOString().split('T')[0];
+                    dateFrom = moment().startOf('week').format('YYYY-MM-DD');
+                    dateTo = moment().endOf('week').format('YYYY-MM-DD');
                 }
                 if (target.classList.contains('month')) {
-                    date.setMonth(date.getMonth() - 1);
-                    dateFrom = date.toISOString().split('T')[0];
+                    dateFrom = moment().startOf('month').format('YYYY-MM-DD');
+                    dateTo = moment().endOf('month').format('YYYY-MM-DD');
                 }
                 if (target.classList.contains('year')) {
-                    date.setFullYear(date.getFullYear() - 1);
-                    dateFrom = date.toISOString().split('T')[0];
+                    dateFrom = moment().startOf('year').format('YYYY-MM-DD');
+                    dateTo = moment().endOf('year').format('YYYY-MM-DD');
+                }
+
+                if (target.classList.contains('interval')) {
+                    this.recordsElement.innerHTML = '';
+                    this.dateFrom.removeAttribute('disabled');
+                    this.dateTo.removeAttribute('disabled');
+                    return this.intervalDates();
                 }
 
                 const response = await OperationsService.getOperations(dateFrom, dateTo);
@@ -87,6 +82,8 @@ export class OperationsView {
                 }
                 
                 this.recordsElement.innerHTML = '';
+                this.dateFrom.value = '';
+                this.dateTo.value = '';
 
                 this.showOperations(response.operations);
                 this.operationsDelete(response.operations);
@@ -105,31 +102,30 @@ export class OperationsView {
     }
 
     intervalDates() {
+        $('#date-from').datetimepicker({
+            format: 'DD.MM.YYYY',
+        });
+
+        $('#date-to').datetimepicker({
+            format: 'DD.MM.YYYY',
+        });
+
         let intervalDates = [...document.getElementsByClassName('main-dates')];
         for (let i = 0; i < intervalDates.length; i++) {
-            intervalDates[i].onchange = () => {
-                this.mainAction.forEach(action => {
-                    action.classList.remove('active');
-                })
-                this.intervalElement.classList.add('active');
-            }
-
             intervalDates[i].addEventListener('blur', async() => {
-                let sendDateFrom = '';
-                let sendDateTo = '';
                 let dateFromParts = this.dateFrom.value.split('.');
                 let dateFrom = new Date(dateFromParts[2], dateFromParts[1] - 1, dateFromParts[0]);
                 let dayFrom = (`0${dateFrom.getDate()}`).slice(-2);
                 let monthFrom = (`0${dateFrom.getMonth() + 1}`).slice(-2);
                 let yearFrom = dateFrom.getFullYear();
-                sendDateFrom = yearFrom + "-" + monthFrom + "-" + dayFrom;
+                let sendDateFrom = yearFrom + "-" + monthFrom + "-" + dayFrom;
 
                 let dateToParts = this.dateTo.value.split('.');
                 let dateTo = new Date(dateToParts[2], dateToParts[1] - 1, dateToParts[0]);
                 let dayTo = (`0${dateTo.getDate()}`).slice(-2);
                 let monthTo = (`0${dateTo.getMonth() + 1}`).slice(-2);
                 let yearTo = dateTo.getFullYear();
-                sendDateTo = yearTo + "-" + monthTo + "-" + dayTo;
+                let sendDateTo = yearTo + "-" + monthTo + "-" + dayTo;
 
                 if(this.dateFrom.value && this.dateTo.value) {
                     const response = await OperationsService.getOperations(sendDateFrom, sendDateTo);
